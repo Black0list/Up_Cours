@@ -76,7 +76,7 @@ $RolesPage = "/Views/Page/roles.php";
                     switch ($RequestArray[2]) 
                     {
                         case 'login':
-                            $AuthController->login();
+                            // git status
                             break;
 
                         case 'register':
