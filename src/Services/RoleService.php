@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Repositories\RoleRepository;
+
 class RoleService
 {
     private RoleRepository $RoleRepository;
