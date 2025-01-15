@@ -79,7 +79,7 @@
       <p>Votre plateforme de cours en ligne pour apprendre et réussir</p>
       <div class="d-flex justify-content-center gap-3">
         <a href="/form/auth" class="btn btn-custom-primary btn-lg px-4">S'authentifier</a>
-        <a href="/cours" class="btn btn-custom-secondary btn-lg px-4">Cours</a>
+        <a href="page//cours" class="btn btn-custom-secondary btn-lg px-4">Cours</a>
       </div>
     </div>
   </div>

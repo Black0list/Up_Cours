@@ -1,4 +1,5 @@
 
+CREATE DATABASE upcours_database;
 
 use upcours_database;
 
@@ -10,12 +11,11 @@ CREATE TABLE roles (
 
 CREATE TABLE utilisateurs (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nom VARCHAR(30),
+    name VARCHAR(30),
+    email VARCHAR(50) UNIQUE,
     password VARCHAR(50),
-    mail VARCHAR(50) UNIQUE,
-    phone VARCHAR(20) UNIQUE,
-    status VARCHAR(55),
     role_id INT,
+    status VARCHAR(55),
     Foreign Key (role_id) REFERENCES roles (id)
 ) ENGINE = INNODB;
 
@@ -33,9 +33,9 @@ CREATE TABLE tags (
 
 CREATE TABLE cours (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    titre VARCHAR(255),
+    title VARCHAR(255),
     description TEXT,
-    contenu VARCHAR(255),
+    content VARCHAR(255),
     categorie_id INT,
     enseignant_id INT,
     Foreign Key (categorie_id) REFERENCES categories (id),

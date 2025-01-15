@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\http\Login;
 use App\http\Register;
 
 require_once dirname(__DIR__) . "\\UpCours\\vendor\\autoload.php";
@@ -72,16 +73,22 @@ $RolesPage = "/Views/Page/roles.php";
             {
                 if(isset($RequestArray[2]))
                 {
+                    if(!isset($_POST['email']) && !isset($_POST['password'])) 
+                    {
+                        return require __DIR__ . $AuthPage;
+                    }
+                    
                     $AuthController = new AuthController;
                     switch ($RequestArray[2]) 
                     {
                         case 'login':
-                            // git status
+                            $LoginForm = new Login($_POST['email'], $_POST['password']);
+                            $AuthController->login($LoginForm);
                             break;
 
                         case 'register':
-                            $LoginForm = new Register($_POST['username'], $_POST['email'], $_POST['password'], $_POST['Cpassword'], $_POST['role']);
-                            $AuthController->register($LoginForm);
+                            $RegisterForm = new Register($_POST['username'], $_POST['email'], $_POST['password'], $_POST['Cpassword'], $_POST['role']);
+                            $AuthController->register($RegisterForm);
                             break;
 
                         case 'logout':
@@ -102,22 +109,5 @@ $RolesPage = "/Views/Page/roles.php";
         default:
             break;
     }
-// ?>
+?>
 
-
-<!-- case '/profile':
-            require __DIR__ .'/Views/users.php';
-            break;
-        case '/form/signup':
-            require __DIR__ .'/Views/Forms/sign_up.php';
-            break;
-        case '/auth/login': 
-            $AuthC->login();
-            break;
-        case '/auth/signup': 
-            $AuthC->signup();
-            break;
-        case '/auth/logout': 
-            $AuthC->logout();
-            break;
-         -->
