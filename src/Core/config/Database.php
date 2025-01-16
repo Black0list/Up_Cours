@@ -42,8 +42,4 @@ class Database {
         public function getConnection(){
             return self::$connection;
         }
-
-
-
-       
 }

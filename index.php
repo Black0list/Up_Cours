@@ -1,15 +1,17 @@
 <?php
 
 use App\Controllers\AuthController;
+use App\DAOs\RoleDAO;
+use App\DAOs\UtilisateurDAO;
 use App\http\Login;
 use App\http\Register;
+use App\Model\Role;
+use App\Model\Utilisateur;
 
 require_once dirname(__DIR__) . "\\UpCours\\vendor\\autoload.php";
 session_start();
 
 
-
-$AuthC = new AuthController;
 $request = $_SERVER['REQUEST_URI'];
 $RequestArray = explode("/", $_SERVER['REQUEST_URI']);
 
@@ -24,7 +26,11 @@ $RolesPage = "/Views/Page/roles.php";
     switch ($RequestArray[1]){
         case '': 
             {
-                require __DIR__ . "/Views/Home/home.php";
+                // require __DIR__ . "/Views/Home/home.php";
+                $role = new RoleDAO;
+                $roleObj = new Role;
+                $roleObj->Build(["id" => 2, "role_name" => "gerant", "description" => "dddaaaaaaaaaaaaaaaaa"]);
+                $role->Update($roleObj);
                 break;
             }
         case 'form':
@@ -109,5 +115,6 @@ $RolesPage = "/Views/Page/roles.php";
         default:
             break;
     }
+
 ?>
 

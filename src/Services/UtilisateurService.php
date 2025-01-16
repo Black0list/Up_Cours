@@ -28,6 +28,7 @@ class UtilisateurService
             $status = "active";
         }
         $user->Build(["name" => $RegisterForm->getProperty("username"), "email" => $RegisterForm->getProperty("email"), "password" => $RegisterForm->getProperty("password"), "Cpassword" => $RegisterForm->getProperty("Cpassword"), "role" => $role, "status" => $status]);
+        
         $this->UtilisateurRepository->Create($user);
 
         return $user;

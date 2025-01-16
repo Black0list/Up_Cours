@@ -4,10 +4,9 @@ namespace App\DAOs;
 
 use App\Core\config\Database;
 use App\Model\Role;
-use App\Model\Utilisateur;
+use App\Daos\GenericDAO;
 
-class RoleDAO
-{
+class RoleDAO extends GenericDAO{
 
     private static $Db;
 
@@ -26,4 +25,13 @@ class RoleDAO
 
         return $roleObj; 
     }
+
+    public function TableName(): string{
+        return "roles";
+    }
+
+    public function getAttributes(): array{
+        return ['id', 'role_name', 'description'];
+    }
 }
+

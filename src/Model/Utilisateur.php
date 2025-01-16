@@ -3,7 +3,7 @@
 namespace App\Model;
 
 class Utilisateur{
-    protected int $id;
+    protected int $id = 0;
     protected String $name;
     protected String $email = '';
     protected String $password = '';

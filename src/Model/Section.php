@@ -10,21 +10,14 @@ class Section
 
 
     public function __call($name, $arguments) {
-        if($name == "Build"){
-            if(count($arguments) == 1){
-                $this->$arguments[0] = $arguments[0];
-            } 
-
-            if(count($arguments) == 2){
-                $this->id = $arguments[0];
-                $this->nom = $arguments[1];
-            } 
-
-            if(count($arguments) == 3){
-                $this->id = $arguments[0];
-                $this->nom = $arguments[1];
-                $this->description = $arguments[2];
-            } 
+        if ($name === "Build" && isset($arguments[0]) && is_array($arguments[0])) {
+            $allowedAttributes = ['id', 'nom', 'description'];
+    
+            foreach ($arguments[0] as $key => $value) {
+                if (in_array($key, $allowedAttributes)) {
+                    $this->{$key} = $value;
+                }
+            }
         }
     }
 
