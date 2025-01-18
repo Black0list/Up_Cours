@@ -6,7 +6,7 @@ use App\Core\config\Database;
 use App\Model\Role;
 use App\Daos\GenericDAO;
 
-class RoleDAO extends GenericDAO{
+class TagDAO extends GenericDAO{
 
     private static $Db;
 
@@ -15,10 +15,10 @@ class RoleDAO extends GenericDAO{
         
     }
 
-    public function getRoleById(int $role_id)
+    public function getTagsCour(int $cour_id)
     {
         $Db = Database::getInstance()->getConnection();
-        $query = "SELECT * FROM roles WHERE id = '{$role_id}'"; 
+        $query = "SELECT * FROM". $this->TableName() ."WHERE id = '{$cour_id}'"; 
         $statement = $Db->prepare($query);
         $statement->execute();
         $roleObj = $statement->fetchObject(Role::class);
@@ -27,11 +27,11 @@ class RoleDAO extends GenericDAO{
     }
 
     public function TableName(): string{
-        return "roles";
+        return "tags";
     }
 
     public function getAttributes(): array{
-        return ['id', 'role_name', 'description'];
+        return ['id', 'nom', 'description'];
     }
 
     public function getClass(){

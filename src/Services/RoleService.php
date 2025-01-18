@@ -23,4 +23,12 @@ class RoleService
     {
         return $this->RoleRepository->getRoleById($role_id);
     }
+
+    public function getAll(){
+        return $this->RoleRepository->getAll();
+    }
+
+    public function getNumberOf(){
+        return $this->RoleRepository->getNumberOf();
+    }
 }

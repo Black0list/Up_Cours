@@ -23,7 +23,7 @@ class UtilisateurService
     {
         $user = new Utilisateur();
         $role = $this->RoleService->getRoleByName($RegisterForm->getProperty("role_name"));
-        $status = "suspended";
+        $status = "pending";
         if(strtolower($RegisterForm->getProperty("role_name")) == "etudiant"){
             $status = "active";
         }
@@ -48,4 +48,44 @@ class UtilisateurService
 
         return $user;
     }
+
+    public function getAll(){
+        $users =  $this->UtilisateurRepository->getAll();
+
+        foreach($users as $key => $value){
+            if (gettype($value) === "object") {
+                $role = $this->RoleService->getRoleById($value->role_id);
+                $value->setRole($role);
+            }            
+        }
+        return $users;
+    }
+
+    public function Delete($user_id){
+        return $this->UtilisateurRepository->Delete($user_id);
+    }
+
+    public function getNumberOf(){
+        return $this->UtilisateurRepository->getNumberOf();
+    }
+
+    public function getAllBy($field, $value){
+        $users =  $this->UtilisateurRepository->getAllBy($field, $value);
+
+        foreach($users as $value){
+            if (gettype($value) === "object") {
+                $role = $this->RoleService->getRoleById($value->role_id);
+                $value->setRole($role);
+            }            
+        }
+        return $users;
+    }
+
+    public function AcceptRequest($user_id){
+        $this->UtilisateurRepository->AcceptRequest($user_id);
+    }
+
+    // public function DenyRequest($user_id){
+    //     $this->UtilisateurRepository->DenyRequest($user_id);
+    // }
 }

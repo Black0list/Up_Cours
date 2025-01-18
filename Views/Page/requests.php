@@ -6,16 +6,13 @@ require_once dirname(__DIR__, 1) . "\\Partials\\header.php";
 ?>
 <div class="card shadow border-0 mb-7">
     <div class="card-header bg-primary text-white text-center">
-        <h5 class="mb-0">Utilisateurs</h5>
+        <h5 class="mb-0">Utilisateurs Demandes</h5>
     </div>
     <div class="table-responsive p-4">
         <table class="table table-hover table-bordered text-center">
             <thead class="thead-light">
                 <tr>
                     <th scope="col">Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Status</th>
                     <th></th>
                 </tr>
             </thead>
@@ -23,18 +20,15 @@ require_once dirname(__DIR__, 1) . "\\Partials\\header.php";
                 <?php foreach ($users as $value) { ?>
                     <tr>
                         <td><?php echo $value->getName(); ?></td>
-                        <td><?php echo $value->getEmail(); ?></td>
-                        <td><?php echo $value->getRole()->getRoleName(); ?></td>
-                        <td><?php echo $value->getStatus(); ?></td>
                         <td>
-                            <form action="/user/delete" method="POST" style="display:inline;">
+                            <form action="/user/request/accept" method="POST" style="display:inline;">
                                 <input type="hidden" name="user_id" value="<?php echo $value->getId(); ?>">
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="submit" class="btn btn-success">Accepter</button>
                             </form>
 
-                            <form action="/user/edit" method="POST" style="display:inline;">
+                            <form action="/user/delete" method="POST" style="display:inline;">
                                 <input type="hidden" name="user_id" value="<?php echo $value->getId(); ?>">
-                                <button type="submit" class="btn btn-primary">Edit</button>
+                                <button type="submit" class="btn btn-danger">Refuser</button>
                             </form>
                         </td>
                     </tr>

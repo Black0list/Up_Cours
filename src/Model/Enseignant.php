@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class Enseignant
+class Enseignant extends Utilisateur
 {
-    
+    private array $CoursList;
 }

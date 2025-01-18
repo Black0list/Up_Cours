@@ -29,4 +29,12 @@ class RoleRepository
         return $this->RoleDAO->getRoleById($role_id);
     }
 
+    public function getAll(){
+        return $this->RoleDAO->getAll();
+    }
+
+    public function getNumberOf(){
+        return $this->RoleDAO->getNumberOf();
+    }
+
 }

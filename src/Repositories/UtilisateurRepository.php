@@ -33,4 +33,28 @@ class UtilisateurRepository
 
         return $userObj;
     }
+
+    public function getAll(){
+        return $this->UtilisateurDAO->getAll();
+    }
+
+    public function Delete($user_id){
+        return $this->UtilisateurDAO->Delete($user_id);
+    }
+
+    public function getNumberOf(){
+        return $this->UtilisateurDAO->getNumberOf();
+    }
+
+    public function getAllBy($field, $value){
+        return $this->UtilisateurDAO->getAllBy($field, $value);
+    }
+
+    public function AcceptRequest($user_id){
+        $Db = Database::getInstance()->getConnection();
+        $query = "UPDATE utilisateurs SET status = 'active' WHERE id = $user_id";
+        $statement = $Db->prepare($query);
+        $statement->execute();
+    }
+
 }

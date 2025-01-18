@@ -9,6 +9,7 @@ class Utilisateur{
     protected String $password = '';
     protected Role $role;
     protected String $status = '';
+    // protected array $list = [];
 
     // public function __construct($id, $name, $email, $password, $role, $status) {
     //     $this->id = $id;
@@ -21,7 +22,7 @@ class Utilisateur{
 
     public function __construct()
     {
-        
+        $this->role = new Role;
     }
 
     public function __call($name, $arguments) {
@@ -34,6 +35,10 @@ class Utilisateur{
                 }
             }
         }
+    }
+
+    public function getRoleName(){
+        return $this->getRole()->getRoleName();
     }
     
 

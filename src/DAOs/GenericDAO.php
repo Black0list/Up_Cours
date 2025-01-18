@@ -4,6 +4,8 @@ namespace App\DAOs;
 
 use App\Core\config\Database;
 use App\Model\Role;
+use App\Model\Utilisateur;
+use PDO;
 
 abstract class GenericDAO{
 
@@ -23,7 +25,7 @@ abstract class GenericDAO{
         $values = [];
     
             
-        foreach ((array)$object as $key => $value) {
+        foreach ((array)$object as $value) {
             if(gettype($value) == "string"){
                 array_push($values, "'{$value}'");
             } else if(gettype($value) == "object") {
@@ -35,8 +37,8 @@ abstract class GenericDAO{
 
         $Db = Database::getInstance()->getConnection();
         $query = "INSERT INTO {$this->TableName()} " . "(" . implode(', ', $columns) . ")" ." VALUES(". implode(', ', $values) .");";
-        $stmt = $Db->prepare($query);  
-        $stmt->execute();
+        $statement = $Db->prepare($query);  
+        $statement->execute();
 
         $object->setId($Db->lastInsertId());
 
@@ -77,13 +79,64 @@ abstract class GenericDAO{
 
 
         $query = "UPDATE {$this->TableName()} SET " . $fields . " WHERE id = {$new_array['id']}";
-        $stmt = $Db->prepare($query);  
-        $stmt->execute();
+        $statement = $Db->prepare($query);  
+        $statement->execute();
 
         var_dump($object);
         
         // return $object;
     }
+
+
+    public function Delete($object_id){
+        $Db = Database::getInstance()->getConnection();
+        $query = "DELETE FROM {$this->TableName()} WHERE id = {$object_id}";
+        $statement = $Db->prepare($query);  
+        $statement->execute();
+    }
+
+    public function getAll(){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT " . implode(", ", $this->getAttributes()) . " FROM {$this->TableName()}";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_CLASS, $this->getClass());
+
+        return $results;
+    }
+
+    public function getAllBy($field, $value){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT " . implode(", ", $this->getAttributes()) . " FROM {$this->TableName()} WHERE {$field} = '{$value}'";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $results = $statement->fetchAll(PDO::FETCH_CLASS, $this->getClass());
+
+        return $results;
+    }
+
+    public function fetchOne($object){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT " .implode(", ", $this->getAttributes()). " FROM {$this->TableName()} WHERE id = {$object->getId()}";
+        $statement = $Db->prepare($query);  
+        $statement->execute();
+
+        $result = $statement->fetchObject($this->getClass());
+    }
+
+    public function getNumberOf(){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT COUNT(*) FROM {$this->TableName()}";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+
+        $Number = $statement->fetchColumn();
+
+        return $Number;
+    }
+
+    abstract public function getClass();
+
 
     public function RemoveSpecialC($KeyWord)
     {

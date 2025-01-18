@@ -36,6 +36,12 @@ class UtilisateurDAO extends GenericDAO{
         return ['id', 'name', 'email', 'password', 'role_id', 'status'];
     }
 
+    public function getClass(){
+        return Utilisateur::class;
+    }
+
+
+
 }
 
 // $user = new Utilisateur;

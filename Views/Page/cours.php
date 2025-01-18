@@ -1,11 +1,17 @@
 <?php
-// die(dirname(__DIR__, 1) . "\\vendor\\autoload.php");
-// require_once dirname(__DIR__) . "\\vendor\\autoload.php";
-// echo dirname(__DIR__, 1) . "\\Partials\\header.php";
-// die();
-// var_dump($_SESSION['user']);
+use App\Controllers\CourController;
+
+// Include header
 require_once dirname(__DIR__, 1) . "\\Partials\\header.php";
 
-require_once dirname(__DIR__, 1) . "\\Page\\Fcours.php"?>
-                    
-<?php require_once dirname(__DIR__, 1) . "\\Partials\\footer.php" ?>
+$CourController = new CourController;
+
+require_once dirname(__DIR__) . "\\Page\\Fcours.php";
+?>
+
+
+
+<?php
+// Include footer
+require_once dirname(__DIR__, 1) . "\\Partials\\footer.php";
+?>

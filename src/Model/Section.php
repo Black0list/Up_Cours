@@ -4,9 +4,9 @@ namespace App\Model;
 
 class Section
 {
-    private int $id;
-    private String $nom;
-    private String $description;
+    protected int $id;
+    protected String $nom;
+    protected String $description;
 
 
     public function __call($name, $arguments) {
