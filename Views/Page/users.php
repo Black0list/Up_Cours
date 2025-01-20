@@ -26,17 +26,21 @@ require_once dirname(__DIR__, 1) . "\\Partials\\header.php";
                         <td><?php echo $value->getEmail(); ?></td>
                         <td><?php echo $value->getRole()->getRoleName(); ?></td>
                         <td><?php echo $value->getStatus(); ?></td>
-                        <td>
-                            <form action="/user/delete" method="POST" style="display:inline;">
-                                <input type="hidden" name="user_id" value="<?php echo $value->getId(); ?>">
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
+                        <?php
+                        if (strtolower($value->getRoleName()) != "admin") { ?>
+                            <td>
+                                <form action="/user/delete" method="POST" style="display:inline;">
+                                    <input type="hidden" name="user_id" value="<?php echo $value->getId(); ?>">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
 
-                            <form action="/user/get" method="POST" style="display:inline;">
-                                <input type="hidden" name="user_id" value="<?php echo $value->getId(); ?>">
-                                <button type="submit" class="btn btn-primary">Edit</button>
-                            </form>
-                        </td>
+                                <form action="/user/get" method="POST" style="display:inline;">
+                                    <input type="hidden" name="user_id" value="<?php echo $value->getId(); ?>">
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                </form>
+                            </td>
+                        <?php }
+                        ?>
                     </tr>
                 <?php } ?>
             </tbody>

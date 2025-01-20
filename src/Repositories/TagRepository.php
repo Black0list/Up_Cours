@@ -36,4 +36,8 @@ class TagRepository{
     public function Update($Object){
         return $this->TagDAO->Update($Object);
     }
+
+    public function Create($Object){
+        return $this->TagDAO->Create($Object);
+    }
 }

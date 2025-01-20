@@ -49,4 +49,8 @@ class RoleRepository
         return $this->RoleDAO->Update($Object);
     }
 
+    public function Create($Object){
+        return $this->RoleDAO->Create($Object);
+    }
+
 }

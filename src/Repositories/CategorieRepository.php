@@ -33,4 +33,8 @@ class CategorieRepository{
     public function Update($Object){
         return $this->CategorieDAO->Update($Object);
     }
+
+    public function Create($Object){
+        return $this->CategorieDAO->Create($Object);
+    }
 }

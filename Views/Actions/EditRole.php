@@ -127,9 +127,9 @@
 
         <form action="<?php echo $redirection ?>" method="POST">
             <div class="form-group">
-                <input type="number" id="id" name="id" value="<?php echo $Object->getId() ?>" required>
+                <input type="hidden" id="id" name="id" value="<?php echo $Object->getId() ?>" required>
             </div>
-            
+
             <div class="form-group">
                 <label for="name">Role Name</label>
                 <input type="text" id="name" name="name" placeholder="Enter the name" value="<?php echo $Object->getRoleName(); ?>" required>

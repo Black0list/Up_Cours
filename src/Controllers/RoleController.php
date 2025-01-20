@@ -32,4 +32,8 @@ class RoleController{
     public function Update($Object){
         return $this->RoleService->Update($Object);
     }
+
+    public function Create($Object){
+        return $this->RoleService->Create($Object);
+    }
 }

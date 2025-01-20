@@ -38,4 +38,8 @@ class TagService{
     public function Update($Object){
         return $this->TagRepository->Update($Object);
     }
+
+    public function Create($Object){
+        return $this->TagRepository->Create($Object);
+    }
 }

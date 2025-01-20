@@ -33,4 +33,7 @@ class CategorieController{
     public function Update($Object){
         return $this->CategorieService->Update($Object);
     }
+    public function Create($Object){
+        return $this->CategorieService->Create($Object);
+    }
 }

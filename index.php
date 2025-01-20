@@ -250,6 +250,13 @@ switch ($RequestArray[1]) {
                         header("location: /page/roles");
                         break;
 
+                    case 'create':
+                        $Object = new Role;
+                        $Object->Build(["role_name" => $_POST['role_name'], "description" => $_POST['description']]);
+                        $RoleController->Create($Object);
+                        header("location: /page/roles");
+                        break;
+
                     default:
                         require __DIR__ . $HomePage;
                         break;
@@ -278,6 +285,13 @@ switch ($RequestArray[1]) {
                         $Object = new Tag;
                         $Object->Build(["id" => $_POST['id'], "nom" => $_POST['name'], "description" => $_POST['description']]);
                         $TagController->Update($Object);
+                        header("location: /page/tags");
+                        break;
+
+                    case 'create':
+                        $Object = new Tag;
+                        $Object->Build(["nom" => $_POST['tag_name'], "description" => $_POST['description']]);
+                        $TagController->Create($Object);
                         header("location: /page/tags");
                         break;
 
@@ -312,6 +326,13 @@ switch ($RequestArray[1]) {
                         header("location: /page/categories");
                         break;
 
+                    case 'create':
+                        $Object = new Categorie;
+                        $Object->Build(["nom" => $_POST['categorie_name'], "description" => $_POST['description']]);
+                        $CategorieController->Create($Object);
+                        header("location: /page/categories");
+                        break;
+
                     default:
                         require __DIR__ . $HomePage;
                         break;
@@ -342,8 +363,9 @@ switch ($RequestArray[1]) {
                         $Enseignant = new Utilisateur;
                         $Categorie->Build(["id" => $_POST['categorie']]);
                         $Enseignant->Build(["id" => $_POST['enseignant']]);
-                        $Object->Build(["id" => $_POST['id'], "title" => $_POST['title'], "description" => $_POST['description'], "content" => $_POST['content'], "categorie" => $Categorie, "enseignant" => $Enseignant, "tags" => $_POST['tags']]);
+                        $Object->Build(["title" => $_POST['title'], "description" => $_POST['description'], "content" => $_POST['content'], "categorie" => $Categorie, "enseignant" => $Enseignant, "tags" => $_POST['tags']]);
                         $CourController->Create($Object);
+                        header("location: /page/cours");
                         break;
 
                     case 'edit':

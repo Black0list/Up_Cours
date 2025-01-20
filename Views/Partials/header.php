@@ -144,7 +144,7 @@ if(!isset($_SESSION['user'])){
                 <div class="collapse navbar-collapse" id="sidebarCollapse">
                     <!-- Navigation -->
                     <ul class="navbar-nav">
-                        <li class="nav-item">
+                        <li class="nav-item" <?php if($_SESSION['user']->getRole()->getRoleName() != "admin") echo "style = 'display:none;'" ?>>
                             <a class="nav-link" href="/page/users">
                                 <i class="bi bi-people"></i> Users
                             </a>
@@ -154,7 +154,7 @@ if(!isset($_SESSION['user'])){
                                 <i class="bi bi-book"></i></i> Cours
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" <?php if($_SESSION['user']->getRole()->getRoleName() != "admin") echo "style = 'display:none;'" ?>>
                             <a class="nav-link" href="/page/roles">
                                 <i class="bi bi-person-vcard-fill"></i> Roles
                             </a>
@@ -164,17 +164,17 @@ if(!isset($_SESSION['user'])){
                                 <i class="bi bi-list-stars"></i> Subscriptions
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" <?php if($_SESSION['user']->getRole()->getRoleName() != "admin") echo "style = 'display:none;'" ?>>
                             <a class="nav-link" href="/page/categories">
                                 <i class="bi bi-bookmark"></i> Categories
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" <?php if($_SESSION['user']->getRole()->getRoleName() != "admin") echo "style = 'display:none;'" ?>>
                             <a class="nav-link" href="/page/tags">
                                 <i class="bi bi-tag"></i> Tags
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" <?php if($_SESSION['user']->getRole()->getRoleName() != "admin") echo "style = 'display:none;'" ?>>
                             <a class="nav-link" href="/page/requests">
                             <i class="bi bi-send-dash"></i></i> Requests
                             </a>
@@ -209,7 +209,7 @@ if(!isset($_SESSION['user'])){
                             <!-- Actions -->
                             <div class="col-sm-6 col-12 text-sm-end">
                                 <div class="mx-n1">
-                                    <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
+                                    <!-- <a href="#" class="btn d-inline-flex btn-sm btn-primary mx-1">
                                         <span class=" pe-2">
                                             <i class="bi bi-plus"></i>
                                         </span>
@@ -217,17 +217,17 @@ if(!isset($_SESSION['user'])){
                                                 Create
                                             </span>
 
-                                        <!-- ============================ MODAL ============================ -->
-                                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                             
+                                         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-xl">
                                                 <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h1 class="modal-title fs-5" id="exampleModalLabel"> Add New <?php echo basename($_SERVER["SCRIPT_FILENAME"], 's.php') ?></h1>
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel"> Add New </h1>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body text-danger">
                                                     <form method="post" action="./../../../core/config/Crud.php">
-                                                        <div class="mb-3 col-md-10 d-flex justify-content-between">
+                                                         <div class="mb-3 col-md-10 d-flex justify-content-between">
 
                                                         </div>
                                                         <div class="modal-footer">
@@ -238,8 +238,8 @@ if(!isset($_SESSION['user'])){
                                                 </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </div> 
+                                    </a>  -->
                                 </div>
                             </div>
                         </div>

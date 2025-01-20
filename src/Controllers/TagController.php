@@ -33,4 +33,8 @@ class TagController{
     public function Update($Object){
         return $this->TagService->Update($Object);
     }
+
+    public function Create($Object){
+        return $this->TagService->Create($Object);
+    }
 }

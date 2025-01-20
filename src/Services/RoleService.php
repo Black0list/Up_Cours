@@ -46,4 +46,8 @@ class RoleService
     public function Update($Object){
         return $this->RoleRepository->Update($Object);
     }
+
+    public function Create($Object){
+        return $this->RoleRepository->Create($Object);
+    }
 }

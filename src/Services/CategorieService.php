@@ -34,4 +34,8 @@ class CategorieService{
     public function Update($Object){
         return $this->CategorieRepository->Update($Object);
     }
+
+    public function Create($Object){
+        return $this->CategorieRepository->Create($Object);
+    }
 }
