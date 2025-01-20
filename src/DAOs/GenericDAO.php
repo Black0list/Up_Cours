@@ -65,7 +65,6 @@ abstract class GenericDAO{
         $Db = Database::getInstance()->getConnection();
         $new_array = array_combine($columns, $values);
 
-
         $query_parts = [];
 
         foreach ($new_array as $key => $value) 
@@ -75,6 +74,7 @@ abstract class GenericDAO{
                 $query_parts[] = $key . " = " . $value;
             }
         }
+
         $fields= implode(", ", $query_parts);
 
 
@@ -82,9 +82,9 @@ abstract class GenericDAO{
         $statement = $Db->prepare($query);  
         $statement->execute();
 
-        var_dump($object);
+        // var_dump($object);
         
-        // return $object;
+        return $object;
     }
 
 
@@ -105,6 +105,18 @@ abstract class GenericDAO{
         return $results;
     }
 
+    public function findOneBy($field, $value){
+        $Db = Database::getInstance()->getConnection();
+        $query = "SELECT " . implode(", ", $this->getAttributes()) . " FROM {$this->TableName()} WHERE {$field} = '{$value}' LIMIT 1";
+        $statement = $Db->prepare($query); 
+        $statement->execute();
+        $result = $statement->fetchObject($this->getClass());
+
+        // var_dump($result);
+        // die();
+        return $result;
+    }
+
     public function getAllBy($field, $value){
         $Db = Database::getInstance()->getConnection();
         $query = "SELECT " . implode(", ", $this->getAttributes()) . " FROM {$this->TableName()} WHERE {$field} = '{$value}'";
@@ -115,14 +127,14 @@ abstract class GenericDAO{
         return $results;
     }
 
-    public function fetchOne($object){
-        $Db = Database::getInstance()->getConnection();
-        $query = "SELECT " .implode(", ", $this->getAttributes()). " FROM {$this->TableName()} WHERE id = {$object->getId()}";
-        $statement = $Db->prepare($query);  
-        $statement->execute();
+    // public function fetchOne($object){
+    //     $Db = Database::getInstance()->getConnection();
+    //     $query = "SELECT " .implode(", ", $this->getAttributes()). " FROM {$this->TableName()} WHERE id = {$object->getId()}";
+    //     $statement = $Db->prepare($query);  
+    //     $statement->execute();
 
-        $result = $statement->fetchObject($this->getClass());
-    }
+    //     $result = $statement->fetchObject($this->getClass());
+    // }
 
     public function getNumberOf(){
         $Db = Database::getInstance()->getConnection();

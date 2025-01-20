@@ -30,17 +30,50 @@ class CourDAO extends GenericDAO
     }
 
 
-    public function fetchAllCours(){
+    // public function fetchAllCours(){
+    //     $Db = Database::getInstance()->getConnection();
+    //     $query = "SELECT ".$this->TableName().".* FROM {$this->TableName()} WHERE {$this->TableName()}.enseignant_id = {$_SESSION['user']->getId()}";
+    //     $statement = $Db->prepare($query);
+    //     $statement->execute();
+
+    //     $result = $statement->fetchAll(PDO::FETCH_CLASS, $this->getClass());
+        
+    // }
+
+    public function Create($Object){
+        $query = "INSERT INTO {$this->TableName()} VALUES(NULL, '{$Object->getTitle()}', '{$Object->getDescription()}', '{$Object->getContent()}', {$Object->getCategory()->getId()}, {$Object->getEnseignant()->getId()})";
         $Db = Database::getInstance()->getConnection();
-        $query = "SELECT ".$this->TableName().".* FROM {$this->TableName()} WHERE {$this->TableName()}.enseignant_id = {$_SESSION['user']->getId()}";
-        echo $query;
         $statement = $Db->prepare($query);
         $statement->execute();
+    }
 
-        $result = $statement->fetchAll(PDO::FETCH_CLASS, $this->getClass());
+    public function Update($Object){
+        $columns = $this->getAttributes();
+        $values = ["NULL", $Object->getTitle(), $Object->getDescription(), $Object->getContent(), $Object->getCategory()->getId(), $Object->getEnseignant()->getId()];
         
-        var_dump($result);
-        die();
+        $new_array = array_combine($columns, $values);
+
+        $query_parts = [];
+
+        foreach ($new_array as $key => $value) 
+        {
+            if($key != "id")
+            {
+                if(is_string($value))
+                {
+                    $query_parts[] = $key . " = " . "'$value'";
+                } else {
+                    $query_parts[] = $key . " = " . $value;
+                }
+            }
+        }
+
+        $fields = implode(", ", $query_parts);
+
+        $query = "UPDATE {$this->TableName()} SET {$fields} WHERE id = {$Object->getId()}";
+        $Db = Database::getInstance()->getConnection();
+        $statement = $Db->prepare($query);
+        $statement->execute();
     }
 }
 

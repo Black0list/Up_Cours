@@ -32,7 +32,7 @@ require_once dirname(__DIR__, 1) . "\\Partials\\header.php";
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
 
-                            <form action="/user/edit" method="POST" style="display:inline;">
+                            <form action="/user/get" method="POST" style="display:inline;">
                                 <input type="hidden" name="user_id" value="<?php echo $value->getId(); ?>">
                                 <button type="submit" class="btn btn-primary">Edit</button>
                             </form>

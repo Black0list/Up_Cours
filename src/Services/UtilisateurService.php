@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\http\Login;
 use App\http\Register;
+use App\Model\Role;
 use App\Model\Utilisateur;
 use App\Repositories\UtilisateurRepository;
 use Exception;
@@ -43,19 +44,32 @@ class UtilisateurService
             return false;
         }
 
+        if(!$user->role_id) return $user->setRole((new Role())->Build(["id" => 0, 'role_name' => "No role", "description" => "No des"]));
+
         $role =  $this->RoleService->getRoleById($user->role_id);
         $user->setRole($role);
 
         return $user;
     }
 
+    public function findOneBy($field, $value){
+        $user = $this->UtilisateurRepository->findOneBy($field, $value);
+        if(!$user || !$value) return (new Utilisateur)->Build(["name" => "No AUTHOR"]);
+        return $user;
+    }
+
     public function getAll(){
         $users =  $this->UtilisateurRepository->getAll();
-
-        foreach($users as $key => $value){
+        $role = new Role;
+        $role->Build(["id" => 0, 'role_name' => "No role", "description" => "No des"]);
+        foreach($users as $value){
             if (gettype($value) === "object") {
-                $role = $this->RoleService->getRoleById($value->role_id);
-                $value->setRole($role);
+                if(!$value->role_id){
+                    $value->setRole($role);
+                } else {
+                    $role = $this->RoleService->getRoleById($value->role_id);
+                    $value->setRole($role);
+                }
             }            
         }
         return $users;
@@ -88,4 +102,9 @@ class UtilisateurService
     // public function DenyRequest($user_id){
     //     $this->UtilisateurRepository->DenyRequest($user_id);
     // }
+
+    public function Update($Object){
+        return $this->UtilisateurRepository->Update($Object);
+    }
+
 }

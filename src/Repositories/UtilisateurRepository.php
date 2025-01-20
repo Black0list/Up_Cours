@@ -38,6 +38,10 @@ class UtilisateurRepository
         return $this->UtilisateurDAO->getAll();
     }
 
+    public function findOneBy($field, $value){
+        return $this->UtilisateurDAO->findOneBy($field, $value);
+    }
+
     public function Delete($user_id){
         return $this->UtilisateurDAO->Delete($user_id);
     }
@@ -55,6 +59,10 @@ class UtilisateurRepository
         $query = "UPDATE utilisateurs SET status = 'active' WHERE id = $user_id";
         $statement = $Db->prepare($query);
         $statement->execute();
+    }
+
+    public function Update($Object){
+        return $this->UtilisateurDAO->Update($Object);
     }
 
 }

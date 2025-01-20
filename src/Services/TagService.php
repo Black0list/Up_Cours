@@ -26,4 +26,16 @@ class TagService{
     public function getNumberOf(){
         return $this->TagRepository->getNumberOf();
     }
+
+    public function getCourTags($cour_id){
+       return  $this->TagRepository->getCourTags($cour_id);
+    }
+
+    public function findOneBy($field, $value){
+        return $this->TagRepository->findOneBy($field, $value);
+    }
+
+    public function Update($Object){
+        return $this->TagRepository->Update($Object);
+    }
 }

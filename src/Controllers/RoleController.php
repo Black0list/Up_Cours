@@ -20,4 +20,16 @@ class RoleController{
     public function getNumberOf(){
         return $this->RoleService->getNumberOf();
     }
+
+    public function Delete($role_id){
+        return $this->RoleService->Delete($role_id);
+    }
+
+    public function findOneBy($field, $value){
+        return $this->RoleService->findOneBy($field, $value);
+    }
+
+    public function Update($Object){
+        return $this->RoleService->Update($Object);
+    }
 }

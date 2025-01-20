@@ -10,7 +10,7 @@ class Cour
     private string $content;
     private array $tags = [];
     private Categorie $categorie;
-    private Enseignant $enseignant;
+    private Utilisateur $enseignant;
     private array $InscriptedStudents = [];
 
     // public function __construct($id, $title, $description, $content, $tags, $category_id, $enseignant_id) {
@@ -23,6 +23,11 @@ class Cour
     //     $this->enseignant_id = $enseignant_id;
     // }
 
+    public function __construct()
+    {
+        $this->categorie = new Categorie;
+    }
+
     public function __call($name, $arguments) {
         if ($name === "Build" && isset($arguments[0]) && is_array($arguments[0])) {
             $allowedAttributes = ['id', 'title', 'description', 'content', 'tags', 'categorie', 'enseignant', 'InscriptedStudents'];
@@ -33,6 +38,10 @@ class Cour
                 }
             }
         }
+    }
+
+    public function getAttributes(): array{
+        return ['id', 'title', 'description', 'content', 'categorie_id', 'enseignant_id'];
     }
 
 

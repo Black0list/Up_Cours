@@ -18,11 +18,19 @@ class CategorieRepository{
         return $this->CategorieDAO->getAll();
     }
 
+    public function findOneBy($field, $value){
+        return $this->CategorieDAO->findOneBy($field, $value);
+    }
+
     public function Delete($categorie_id){
         return $this->CategorieDAO->Delete($categorie_id);
     }
 
     public function getNumberOf(){
         return $this->CategorieDAO->getNumberOf();
+    }
+
+    public function Update($Object){
+        return $this->CategorieDAO->Update($Object);
     }
 }

@@ -25,4 +25,12 @@ class TagController{
     public function getNumberOf(){
         return $this->TagService->getNumberOf();
     }
+
+    public function findOneBy($field, $value){
+        return $this->TagService->findOneBy($field, $value);
+    }
+
+    public function Update($Object){
+        return $this->TagService->Update($Object);
+    }
 }

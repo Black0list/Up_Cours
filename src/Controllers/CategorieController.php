@@ -25,4 +25,12 @@ class CategorieController{
     public function getNumberOf(){
         return $this->CategorieService->getNumberOf();
     }
+
+    public function findOneBy($field, $value){
+        return $this->CategorieService->findOneBy($field, $value);
+    }
+
+    public function Update($Object){
+        return $this->CategorieService->Update($Object);
+    }
 }

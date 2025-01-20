@@ -13,7 +13,7 @@ $CourController = new CourController;
     <div class="row g-4 px-4 py-4">
         <?php foreach ($roles as $role) { ?>
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                <div class="card h-100 shadow-sm border-2 hover-lift">
+                <div class="card h-100 shadow-sm border-1 border-primary">
                     <div class="card-body text-center">
                         <h5 class="card-title"><?php echo $role->getRoleName(); ?></h5>
                         <p class="card-text text-muted"><?php echo $role->getDescription(); ?></p>
@@ -24,7 +24,7 @@ $CourController = new CourController;
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
 
-                        <form action="/role/get" method="POST" style="display:inline;">
+                        <form action="/role/edit" method="POST" style="display:inline;">
                             <input type="hidden" name="role_id" value="<?php echo $role->getId(); ?>">
                             <button type="submit" class="btn btn-primary">Edit</button>
                         </form>

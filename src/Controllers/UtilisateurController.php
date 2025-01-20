@@ -37,4 +37,12 @@ class UtilisateurController{
     //     $this->UtilisateurService->DenyRequest($user_id);
     // }
 
+    public function findOneBy($field, $value){
+        return $this->UtilisateurService->findOneBy($field, $value);
+    }
+
+    public function Update($Object){
+        return $this->UtilisateurService->Update($Object);
+    }
+
 }

@@ -23,6 +23,8 @@ class RoleDAO extends GenericDAO{
         $statement->execute();
         $roleObj = $statement->fetchObject(Role::class);
 
+        if(!$roleObj) return false;
+
         return $roleObj; 
     }
 

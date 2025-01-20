@@ -3,9 +3,9 @@
 namespace App\Model;
 
 class Role{
-    private int $id ;
-    private String $role_name;
-    private String $description;
+    public int $id = 0;
+    public String $role_name;
+    public String $description = '';
 
     public function __construct()
     {
@@ -22,6 +22,10 @@ class Role{
                 }
             }
         }
+    }
+
+    public function getAttributes(): array{
+        return ['id', 'role_name', 'description'];
     }
 
 

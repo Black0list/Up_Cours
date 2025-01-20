@@ -26,7 +26,13 @@ class AuthController{
             if($_SESSION['user']->getName() == null){
                 header('location: /form/auth');
             } else {
-                header('location: /page/users');
+                if($_SESSION['user']->getStatus() == "pending"){
+                    $_SESSION["message"] = "Oops ! Your Account is Suspended";
+                    unset($_SESSION['user']);
+                    header('location: /form/auth');
+                } else {
+                    header('location: /page/cours');
+                }
             }
 
         } 
@@ -45,9 +51,12 @@ class AuthController{
 
     public function register($RegisterForm){
         $user = $this->AuthService->register($RegisterForm);
-        $_SESSION["user"] = $user;
-        var_dump($user);
-        header('location: /page/users');
+        if($user->getRole()->getRoleName() == "enseignant") {
+            header('location: /form/auth');
+        } else {
+            $_SESSION["user"] = $user;
+            header('location: /page/cours');
+        }
     }
 }
 

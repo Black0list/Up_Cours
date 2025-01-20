@@ -37,4 +37,16 @@ class RoleRepository
         return $this->RoleDAO->getNumberOf();
     }
 
+    public function Delete($role_id){
+        return $this->RoleDAO->Delete($role_id);
+    }
+
+    public function findOneBy($field, $value){
+        return $this->RoleDAO->findOneBy($field, $value);
+    }
+
+    public function Update($Object){
+        return $this->RoleDAO->Update($Object);
+    }
+
 }

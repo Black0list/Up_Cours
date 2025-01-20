@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Model\Role;
 use App\Repositories\RoleRepository;
 
 class RoleService
@@ -21,7 +22,9 @@ class RoleService
 
     public function getRoleById(int $role_id)
     {
-        return $this->RoleRepository->getRoleById($role_id);
+        $role =  $this->RoleRepository->getRoleById($role_id);
+        if(!$role || !$role_id) return (new Role())->Build(['role_name' => "No role"]);
+        return $role;
     }
 
     public function getAll(){
@@ -30,5 +33,17 @@ class RoleService
 
     public function getNumberOf(){
         return $this->RoleRepository->getNumberOf();
+    }
+
+    public function Delete($role_id){
+        return $this->RoleRepository->Delete($role_id);
+    }
+
+    public function findOneBy($field, $value){
+        return $this->RoleRepository->findOneBy($field, $value);
+    }
+
+    public function Update($Object){
+        return $this->RoleRepository->Update($Object);
     }
 }

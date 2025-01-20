@@ -4,12 +4,12 @@ namespace App\Model;
 
 class Utilisateur{
     protected int $id = 0;
-    protected String $name;
+    protected String $name = '';
     protected String $email = '';
     protected String $password = '';
     protected Role $role;
     protected String $status = '';
-    // protected array $list = [];
+    protected array $list = [];
 
     // public function __construct($id, $name, $email, $password, $role, $status) {
     //     $this->id = $id;
@@ -41,6 +41,9 @@ class Utilisateur{
         return $this->getRole()->getRoleName();
     }
     
+    public function getAttributes():array{
+        return ['id', 'name', 'email', 'password', 'role_id', 'status'];
+    }
 
 
     public function getId() { return $this->id; }

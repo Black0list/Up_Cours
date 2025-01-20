@@ -6,7 +6,7 @@ require_once dirname(__DIR__, 1) . "\\Partials\\header.php";
 ?>
 <div class="card shadow border-0 mb-7">
     <div class="card-header bg-primary text-white text-center">
-        <h5 class="mb-0">Utilisateurs Demandes</h5>
+        <h5 class="mb-0">Demandes Utilisateurs</h5>
     </div>
     <div class="table-responsive p-4">
         <table class="table table-hover table-bordered text-center">

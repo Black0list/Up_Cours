@@ -7,7 +7,7 @@ $CourController = new CourController;
 
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white text-center">
-            <h5 class="mb-0">Catalogue</h5>
+            <h5 class="mb-0">Tags</h5>
         </div>
         <div class="row g-4 px-4 py-4">
             <?php foreach ($tags as $value) { ?>
@@ -25,13 +25,13 @@ $CourController = new CourController;
                             <p class="card-text text-muted"><?php echo $value->getDescription() ?></p>
                         </div>
                         <div class="card-footer bg-light text-center">
-                            <form action="/categorie/delete" method="POST" style="display:inline;">
-                                <input type="hidden" name="categorie_id" value="<?php echo $value->getId(); ?>">
+                            <form action="/tag/delete" method="POST" style="display:inline;">
+                                <input type="hidden" name="tag_id" value="<?php echo $value->getId(); ?>">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
 
-                            <form action="/categorie/edit" method="POST" style="display:inline;">
-                                <input type="hidden" name="categorie_id" value="<?php echo $value->getId(); ?>">
+                            <form action="/tag/get" method="POST" style="display:inline;">
+                                <input type="hidden" name="tag_id" value="<?php echo $value->getId(); ?>">
                                 <button type="submit" class="btn btn-primary">Edit</button>
                             </form>
                         </div>

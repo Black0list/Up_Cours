@@ -5,6 +5,8 @@ namespace App\DAOs;
 use App\Core\config\Database;
 use App\Model\Role;
 use App\Daos\GenericDAO;
+use App\Model\Tag;
+use PDO;
 
 class TagDAO extends GenericDAO{
 
@@ -15,15 +17,15 @@ class TagDAO extends GenericDAO{
         
     }
 
-    public function getTagsCour(int $cour_id)
+    public function getCourTags(int $cour_id)
     {
         $Db = Database::getInstance()->getConnection();
-        $query = "SELECT * FROM". $this->TableName() ."WHERE id = '{$cour_id}'"; 
+        $query = "SELECT DISTINCT tags.* FROM Tags, cours_tags WHERE cours_tags.tag_id = tags.id AND cours_tags.cour_id = {$cour_id};"; 
         $statement = $Db->prepare($query);
         $statement->execute();
-        $roleObj = $statement->fetchObject(Role::class);
+        $tags = $statement->fetchAll(PDO::FETCH_CLASS, $this->getClass());
 
-        return $roleObj; 
+        return $tags; 
     }
 
     public function TableName(): string{
@@ -35,7 +37,7 @@ class TagDAO extends GenericDAO{
     }
 
     public function getClass(){
-        return Role::class;
+        return Tag::class;
     }
 }
 

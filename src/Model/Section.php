@@ -4,9 +4,9 @@ namespace App\Model;
 
 class Section
 {
-    protected int $id;
-    protected String $nom;
-    protected String $description;
+    protected int $id = 0;
+    protected String $nom = 'no categorie';
+    protected String $description = '';
 
 
     public function __call($name, $arguments) {
@@ -19,6 +19,10 @@ class Section
                 }
             }
         }
+    }
+
+    public function getAttributes(): array{
+        return ['id', 'nom', 'description'];
     }
 
     public function getId() { return $this->id; }

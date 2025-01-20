@@ -124,7 +124,7 @@ $CourController = new CourController;
                                 </svg>
                             </div>
                             <h5 class="card-title"><?php echo $course->getTitle() ?></h5>
-                            <p class="card-text text-muted">Modern solutions for your digital presence</p>
+                            <p class="card-text text-muted"><?php echo $course->getDescription() ?></p>
                         </div>
                         <div class="card-footer bg-light text-center">
                             <a type="button" href="/form/auth" class="btn btn-primary">Learn More</a>

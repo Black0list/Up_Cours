@@ -19,11 +19,19 @@ class CategorieService{
         return $this->CategorieRepository->getAll();
     }
 
+    public function findOneBy($field, $value){
+        return $this->CategorieRepository->findOneBy($field, $value);
+    }
+
     public function Delete($categorie_id){
         return $this->CategorieRepository->Delete($categorie_id);
     }
 
     public function getNumberOf(){
         return $this->CategorieRepository->getNumberOf();
+    }
+
+    public function Update($Object){
+        return $this->CategorieRepository->Update($Object);
     }
 }
