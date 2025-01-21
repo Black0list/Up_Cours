@@ -54,7 +54,7 @@ $CourController = new CourController;
                             </div>
                         </div>
                         <h5 class="card-title"><?php echo $value->getName() ?></h5>
-                        <p class="card-text text-muted"><?php echo $value->getDescription() ?></p>
+                        <p class="card-text text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 200px;"><?php echo $value->getDescription() ?></p>
                     </div>
                     <div class="card-footer bg-light text-center">
                         <form action="/tag/delete" method="POST" style="display:inline;">

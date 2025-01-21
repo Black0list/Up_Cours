@@ -45,4 +45,12 @@ class UtilisateurController{
         return $this->UtilisateurService->Update($Object);
     }
 
+    public function Subscribe($cour_id, $etudiant_id){
+        $this->UtilisateurService->Subscribe($cour_id, $etudiant_id);
+    }
+
+    public function getAllSubscriptions($user_id){
+        return $this->UtilisateurService->getAllSubscriptions($user_id);
+    }
+
 }

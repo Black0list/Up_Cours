@@ -112,8 +112,6 @@ abstract class GenericDAO{
         $statement->execute();
         $result = $statement->fetchObject($this->getClass());
 
-        // var_dump($result);
-        // die();
         return $result;
     }
 

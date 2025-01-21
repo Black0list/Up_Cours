@@ -65,4 +65,12 @@ class UtilisateurRepository
         return $this->UtilisateurDAO->Update($Object);
     }
 
+    public function Subscribe($cour_id, $etudiant_id){
+        $this->UtilisateurDAO->Subscribe($cour_id, $etudiant_id);
+    }
+
+    public function getAllSubscriptions($user_id){
+        return $this->UtilisateurDAO->getAllSubscriptions($user_id);
+    }
+
 }

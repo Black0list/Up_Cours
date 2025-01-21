@@ -337,9 +337,9 @@
             <div class="meta-item">
                 <i class="fa fa-tags"></i>
                 <span>
-                    <?php foreach($cour->getTags() as $tag){
+                    <?php foreach ($cour->getTags() as $tag) {
                         echo $tag->getName() . " ";
-                    } 
+                    }
                     ?>
                 </span>
             </div>
@@ -423,7 +423,35 @@
             <!-- Right Column - Sidebar -->
             <div class="course-sidebar">
                 <div class="price-tag"></div>
-                <button class="enroll-button">Subscribe Now</button>
+                <form action="/user/subscribe" method="POST" <?php if ($_SESSION['user']->getRole()->getRoleName() == "etudiant") {
+                                                                    echo "style = 'display:inline;'";
+                                                                } else {
+                                                                    echo "style = 'display:none;'";
+                                                                } ?>>
+                    <input type="hidden" name="cour_id" value="<?php echo $cour->getId(); ?>">
+                    <input type="hidden" name="etudiant_id" value="<?php echo $_SESSION['user']->getId(); ?>">
+                    <?php
+                    $subscriptions = $UtilisateurController->getAllSubscriptions($_SESSION['user']->getId());
+                    $isSubscribed = false;
+
+                    foreach ($subscriptions as $value) {
+                        if ($value->getId() == $cour->getId()) {
+                            $isSubscribed = true;
+                            break; 
+                        }
+                    }
+                    if ($isSubscribed) {
+                    ?>
+                        <button type="submit" class="enroll-button" style="background-color: var(--danger)">Unsubscribe</button>
+                    <?php
+                    } else {
+                    ?>
+                        <button type="submit" class="enroll-button">Subscribe Now</button>
+                    <?php
+                    }
+                    ?>
+                </form>
+                <!-- <button class="enroll-button">Subscribe Now</button> -->
                 <div class="course-features">
                     <div class="feature-item">
                         <i class="fas fa-video"></i>
@@ -472,13 +500,16 @@
         // Enroll button interaction
         const enrollButton = document.querySelector('.enroll-button');
         enrollButton.addEventListener('click', () => {
-            enrollButton.textContent = 'Enrolling...';
-            enrollButton.style.opacity = '0.8';
+            if(enrollButton.textContent == "Unsubscribe") {
+                enrollButton.textContent = 'Unsubscribing...';
+                enrollButton.style.backgroundColor = 'var(--danger)';
+            } else {
+                enrollButton.textContent = 'Enrolling...';
+                enrollButton.style.backgroundColor = 'var(--success)';
+            }
 
             // Simulate enrollment process
             setTimeout(() => {
-                enrollButton.textContent = 'Enrolled!';
-                enrollButton.style.backgroundColor = 'var(--success)';
                 enrollButton.disabled = true;
 
                 // Show success message
@@ -667,7 +698,7 @@
     `;
         document.head.appendChild(tooltipStyle);
     </script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 
 </html>

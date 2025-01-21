@@ -178,13 +178,13 @@ use App\Controllers\TagController;
 
                 foreach ($tags as $value) { ?>
                     <label for="<?php echo $value->getName() ?>"><?php echo $value->getName() ?></label>
-                    <input id="<?php echo $value->getName() ?>" name="tags[]" type="checkbox" value="<?php echo $value->getName() ?>" <?php if (in_array($value->getName(), $ObjectTags)) echo "checked" ?>>
+                    <input id="<?php echo $value->getName() ?>" name="tags[]" type="checkbox" value="<?php echo $value->getId() ?>" <?php if (in_array($value->getName(), $ObjectTags)) echo "checked" ?>>
                 <?php }
                 ?>
             </div>
 
             <div class="form-group">
-                <input type="number" id="enseignant" name="enseignant" value="<?php echo $Object->getEnseignant()->getId() ?>" required>
+                <input type="hidden" id="enseignant" name="enseignant" value="<?php echo $Object->getEnseignant()->getId() ?>" required>
             </div>
 
             <div class="form-actions">

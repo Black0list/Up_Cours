@@ -4,8 +4,10 @@ namespace App\DAOs;
 
 use App\Core\config\Database;
 use App\DAOs\GenericDAO;
+use App\Model\Cour;
 use App\Model\Role;
 use App\Model\Utilisateur;
+use PDO;
 
 class UtilisateurDAO extends GenericDAO{
 
@@ -14,7 +16,7 @@ class UtilisateurDAO extends GenericDAO{
 
     public function __construct()
     {
-        
+
     }
 
     public function Create($user)
@@ -70,12 +72,38 @@ class UtilisateurDAO extends GenericDAO{
         $statement->execute();
     }
 
+    public function Subscribe(int $cour_id, int $etudiant_id){
+        
+        $query = "SELECT * from subscriptions WHERE cour_id = $cour_id AND etudiant_id = $etudiant_id";
+        $Db = Database::getInstance()->getConnection();
+        $statement = $Db->prepare($query);
+        $statement->execute();
+
+        if($statement->rowCount() >= 1) {
+            $query = "DELETE from subscriptions WHERE cour_id = $cour_id AND etudiant_id = $etudiant_id";
+            $Db = Database::getInstance()->getConnection();
+            $statement = $Db->prepare($query);
+            $statement->execute();
+        } else {
+            $query = "INSERT INTO subscriptions (cour_id, etudiant_id) VALUES({$cour_id}, {$etudiant_id})";
+            $Db = Database::getInstance()->getConnection();
+            $statement = $Db->prepare($query);
+            $statement->execute();
+        }
+
+
+    }
+
+    public function getAllSubscriptions($user_id){
+        $query = "SELECT cours.* FROM cours JOIN subscriptions ON subscriptions.cour_id = cours.id WHERE subscriptions.etudiant_id = $user_id";
+        $Db = Database::getInstance()->getConnection();
+        $statement = $Db->prepare($query);
+        $statement->execute();
+        $subscriptions = $statement->fetchAll(PDO::FETCH_CLASS, Cour::class);
+
+        return $subscriptions;
+    }
+
 }
 
-// $user = new Utilisateur;
-// $role = new Role;
-// $role->Build(["id" => 1, "role_name" => "admin", "description" => "aaaaaaaaaaaaaaaaa"]);
-// $user->Build(["name" => "hadoui", "id" => 1, "role" => $role]);
 
-// $userDAO = new UtilisateurDAO;
-// $userDAO->Create($user);

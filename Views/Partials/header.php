@@ -159,7 +159,7 @@ if(!isset($_SESSION['user'])){
                                 <i class="bi bi-person-vcard-fill"></i> Roles
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" <?php if($_SESSION['user']->getRole()->getRoleName() == "admin" || $_SESSION['user']->getRole()->getRoleName() == "enseignant") echo "style = 'display:none;'" ?>>
                             <a class="nav-link" href="/page/subscriptions">
                                 <i class="bi bi-list-stars"></i> Subscriptions
                             </a>

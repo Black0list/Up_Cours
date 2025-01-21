@@ -6,14 +6,10 @@ use App\Controllers\CourController;
 use App\Controllers\RoleController;
 use App\Controllers\TagController;
 use App\Controllers\UtilisateurController;
-use App\DAOs\CourDAO;
-use App\DAOs\RoleDAO;
-use App\DAOs\UtilisateurDAO;
 use App\http\Login;
 use App\http\Register;
 use App\Model\Categorie;
 use App\Model\Cour;
-use App\Model\Enseignant;
 use App\Model\Role;
 use App\Model\Tag;
 use App\Model\Utilisateur;
@@ -48,6 +44,7 @@ $EditCour = "/Views/Actions/EditCour.php";
 $EditRole = "/Views/Actions/EditRole.php";
 $EditSection = "/Views/Actions/EditSection.php";
 $EditUser = "/Views/Actions/EditUser.php";
+$SubscriptionPage = "/Views/Page/subscriptions.php";
 
 switch ($RequestArray[1]) {
     case '': {
@@ -114,7 +111,6 @@ switch ($RequestArray[1]) {
                         if (!isset($_SESSION['user'])) {
                             return require __DIR__ . $AuthPage;
                         }
-                        $CategorieController = new CategorieController;
                         $categories = $CategorieController->getAll();
                         require __DIR__ . $CategoriesPage;
                         break;
@@ -123,7 +119,6 @@ switch ($RequestArray[1]) {
                         if (!isset($_SESSION['user'])) {
                             return require __DIR__ . $AuthPage;
                         }
-                        $UtilisateurController = new $UtilisateurController;
                         $users = $UtilisateurController->getAllBy("status", "pending");
                         require __DIR__ . $RequestPage;
                         break;
@@ -132,9 +127,16 @@ switch ($RequestArray[1]) {
                         if (!isset($_SESSION['user'])) {
                             return require __DIR__ . $AuthPage;
                         }
-                        $TagController = new TagController;
                         $tags = $TagController->getAll();
                         require __DIR__ . $TagsPage;
+                        break;
+
+                    case 'subscriptions':
+                        if (!isset($_SESSION['user'])) {
+                            return require __DIR__ . $AuthPage;
+                        }
+                        $subscriptions = $UtilisateurController->getAllSubscriptions($_SESSION['user']->getId());
+                        require __DIR__ . $SubscriptionPage;
                         break;
 
                     case 'roles':
@@ -207,6 +209,11 @@ switch ($RequestArray[1]) {
                         $Object->Build(["id" => $_POST['id'], "name" => $_POST['name'], "email" => $_POST['email'], "role" => $ObjectRole, "status" => $_POST['status']]);
                         $UtilisateurController->Update($Object);
                         header("location: /page/users");
+                        break;
+
+                    case 'subscribe':
+                        $UtilisateurController->Subscribe($_POST['cour_id'], $_POST['etudiant_id']);
+                        header("location: /page/subscriptions");
                         break;
 
                     case 'request':
@@ -382,14 +389,6 @@ switch ($RequestArray[1]) {
                     case 'delete':
                         $CourController->Delete($_POST['cour_id']);
                         header("Location: /page/cours");
-                        break;
-
-                    case 'edit':
-                        if (!isset($_POST['email']) && !isset($_POST['password']) && !isset($_POST['password'])) {
-                            return require __DIR__ . $AuthPage;
-                        }
-                        $RegisterForm = new Register($_POST['username'], $_POST['email'], $_POST['password'], $_POST['Cpassword'], $_POST['role']);
-                        $AuthController->register($RegisterForm);
                         break;
 
                     default:

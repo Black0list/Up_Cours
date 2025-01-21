@@ -117,7 +117,7 @@ $CourController = new CourController;
         <div class="table-responsive p-4">
             <div>
                 <!-- <button type="button" class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#exampleModal">Create</button> -->
-                <button type="button" class="btn-sm mb-4 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" <?php if ($_SESSION['user']->getRole()->getRoleName() == "enseigant") {
+                <button type="button" class="btn-sm mb-4 btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" <?php if ($_SESSION['user']->getRole()->getRoleName() == "enseignant") {
                                                                                                                                 echo "style = 'display:block;'";
                                                                                                                             } else {
                                                                                                                                 echo "style = 'display:none;'";
@@ -163,8 +163,8 @@ $CourController = new CourController;
                                             $tags = $TagController->getAll();
                                             foreach ($tags as $value) { ?>
                                                 <div class="form-check form-check-inline">
-                                                    <input id="<?php echo $value->getName() ?>" name="tags[]" class="form-check-input" type="checkbox" value="<?php echo $value->getName() ?>">
                                                     <label for="<?php echo $value->getName() ?>" class="form-check-label"><?php echo $value->getName() ?></label>
+                                                    <input id="<?php echo $value->getName() ?>" name="tags[]" class="form-check-input" type="checkbox" value="<?php echo $value->getId() ?>">
                                                 </div>
                                             <?php } ?>
                                         </div>
@@ -200,21 +200,12 @@ $CourController = new CourController;
                                     </div>
                                 </div>
                                 <h5 class="card-title"><?php echo $course->getTitle() ?></h5>
-                                <p class="card-text text-muted"><?php echo $course->getDescription() ?></p>
+                                <p class="card-text text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 200px;"><?php echo $course->getDescription() ?></p>
                             </div>
                             <div class="card-footer bg-light text-center">
                                 <form action="/cour/courDetails" method="POST" style="display:inline;">
                                     <input type="hidden" name="cour_id" value="<?php echo $course->getId(); ?>">
                                     <button type="submit" href="/cour/courDetails" class="btn btn-primary">View Details</button>
-                                </form>
-
-                                <form action="/cour/delete" method="POST" <?php if ($_SESSION['user']->getRole()->getRoleName() == "etudiant") {
-                                                                                echo "style = 'display:none;'";
-                                                                            } else {
-                                                                                echo "style = 'display:inline;'";
-                                                                            } ?>>
-                                    <input type="hidden" name="cour_id" value="<?php echo $course->getId(); ?>">
-                                    <button type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i></button>
                                 </form>
 
                                 <form action="/cour/get" method="POST" <?php if ($_SESSION['user']->getRole()->getRoleName() == "etudiant") {
@@ -226,13 +217,13 @@ $CourController = new CourController;
                                     <button type="submit" class="btn btn-info"><i class="bi bi-pencil"></i></button>
                                 </form>
 
-                                <form action="/cour/subscribe" method="POST" <?php if ($_SESSION['user']->getRole()->getRoleName() == "etudiant") {
-                                                                                    echo "style = 'display:inline;'";
-                                                                                } else {
-                                                                                    echo "style = 'display:none;'";
-                                                                                } ?>>
+                                <form action="/cour/delete" method="POST" <?php if ($_SESSION['user']->getRole()->getRoleName() == "etudiant") {
+                                                                                echo "style = 'display:none;'";
+                                                                            } else {
+                                                                                echo "style = 'display:inline;'";
+                                                                            } ?>>
                                     <input type="hidden" name="cour_id" value="<?php echo $course->getId(); ?>">
-                                    <button type="submit" class="btn btn-warning"><i class="bi bi-star-fill"></i></button>
+                                    <button type="submit" class="btn btn-danger"><i class="bi bi-trash3"></i></button>
                                 </form>
                             </div>
                         </div>

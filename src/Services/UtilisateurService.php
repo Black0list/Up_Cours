@@ -107,4 +107,12 @@ class UtilisateurService
         return $this->UtilisateurRepository->Update($Object);
     }
 
+    public function Subscribe($cour_id, $etudiant_id){
+        $this->UtilisateurRepository->Subscribe($cour_id, $etudiant_id);
+    }
+
+    public function getAllSubscriptions($user_id){
+        return $this->UtilisateurRepository->getAllSubscriptions($user_id);
+    }
+
 }

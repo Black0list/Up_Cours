@@ -52,7 +52,7 @@ $CourController = new CourController;
                     </div>
                     <div class="card-body text-center">
                         <h5 class="card-title"><?php echo $role->getRoleName(); ?></h5>
-                        <p class="card-text text-muted"><?php echo $role->getDescription(); ?></p>
+                        <p class="card-text text-muted" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 200px;"><?php echo $role->getDescription(); ?></p>
                     </div>
                     <div class="card-footer bg-light text-center">
                         <form action="/role/delete" method="POST" style="display:inline;">

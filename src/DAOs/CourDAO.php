@@ -29,22 +29,25 @@ class CourDAO extends GenericDAO
         return Cour::class;
     }
 
-
-    // public function fetchAllCours(){
-    //     $Db = Database::getInstance()->getConnection();
-    //     $query = "SELECT ".$this->TableName().".* FROM {$this->TableName()} WHERE {$this->TableName()}.enseignant_id = {$_SESSION['user']->getId()}";
-    //     $statement = $Db->prepare($query);
-    //     $statement->execute();
-
-    //     $result = $statement->fetchAll(PDO::FETCH_CLASS, $this->getClass());
-        
-    // }
-
     public function Create($Object){
+
         $query = "INSERT INTO {$this->TableName()} VALUES(NULL, '{$Object->getTitle()}', '{$Object->getDescription()}', '{$Object->getContent()}', {$Object->getCategory()->getId()}, {$Object->getEnseignant()->getId()})";
         $Db = Database::getInstance()->getConnection();
         $statement = $Db->prepare($query);
         $statement->execute();
+
+        $Object->setId($Db->lastInsertId());
+
+        $tags = $Object->getTags();
+
+        $sql = '';
+        for ($i = 0; $i < count($tags); $i++) {
+            $sql .= "INSERT INTO cours_tags (cour_id, tag_id) VALUES ({$Object->getId()}, {$tags[$i]});";
+        }
+
+        $stmt = $Db->prepare($sql);
+
+        $stmt->execute();
     }
 
     public function Update($Object){
@@ -74,6 +77,21 @@ class CourDAO extends GenericDAO
         $Db = Database::getInstance()->getConnection();
         $statement = $Db->prepare($query);
         $statement->execute();
+
+        $query = "DELETE FROM cours_tags WHERE cour_id = {$Object->getId()}";
+        $statement = $Db->prepare($query);
+        $statement->execute();
+
+        $tags = $Object->getTags();
+
+        $sql = '';
+        for ($i = 0; $i < count($tags); $i++) {
+            $sql .= "INSERT INTO cours_tags (cour_id, tag_id) VALUES ({$Object->getId()}, {$tags[$i]});";
+        }
+
+        $stmt = $Db->prepare($sql);
+
+        $stmt->execute();
     }
 }
 
