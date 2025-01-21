@@ -100,7 +100,7 @@ switch ($RequestArray[1]) {
                         break;
 
                     case 'users':
-                        if (!isset($_SESSION['user'])) {
+                        if (!isset($_SESSION['user']) || $_SESSION['user']->getRoleName() != "admin") {
                             return require __DIR__ . $AuthPage;
                         }
                         $users = $UtilisateurController->getAll();
@@ -108,7 +108,7 @@ switch ($RequestArray[1]) {
                         break;
 
                     case 'categories':
-                        if (!isset($_SESSION['user'])) {
+                        if (!isset($_SESSION['user']) || $_SESSION['user']->getRoleName() != "admin") {
                             return require __DIR__ . $AuthPage;
                         }
                         $categories = $CategorieController->getAll();
@@ -116,7 +116,7 @@ switch ($RequestArray[1]) {
                         break;
 
                     case 'requests':
-                        if (!isset($_SESSION['user'])) {
+                        if (!isset($_SESSION['user']) || $_SESSION['user']->getRoleName() != "admin") {
                             return require __DIR__ . $AuthPage;
                         }
                         $users = $UtilisateurController->getAllBy("status", "pending");
@@ -124,7 +124,7 @@ switch ($RequestArray[1]) {
                         break;
 
                     case 'tags':
-                        if (!isset($_SESSION['user'])) {
+                        if (!isset($_SESSION['user']) || $_SESSION['user']->getRoleName() != "admin") {
                             return require __DIR__ . $AuthPage;
                         }
                         $tags = $TagController->getAll();
@@ -132,7 +132,7 @@ switch ($RequestArray[1]) {
                         break;
 
                     case 'subscriptions':
-                        if (!isset($_SESSION['user'])) {
+                        if (!isset($_SESSION['user']) || $_SESSION['user']->getRoleName() != "etudiant") {
                             return require __DIR__ . $AuthPage;
                         }
                         $subscriptions = $UtilisateurController->getAllSubscriptions($_SESSION['user']->getId());
@@ -140,7 +140,7 @@ switch ($RequestArray[1]) {
                         break;
 
                     case 'roles':
-                        if (!isset($_SESSION['user'])) {
+                        if (!isset($_SESSION['user']) || $_SESSION['user']->getRoleName() != "admin") {
                             return require __DIR__ . $AuthPage;
                         }
                         $roles = $RoleController->getAll();
