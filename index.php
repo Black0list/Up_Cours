@@ -70,6 +70,9 @@ switch ($RequestArray[1]) {
                 }
                 switch ($RequestArray[2]) {
                     case 'auth':
+                        if (isset($_SESSION['user'])) {
+                            return require __DIR__ . $CoursPage;
+                        }
                         require __DIR__ . $AuthPage;
                         break;
 
