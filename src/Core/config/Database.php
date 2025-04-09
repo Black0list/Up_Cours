@@ -33,6 +33,7 @@ class Database {
         if (!self::$instance) {
             self::$instance = new self;
         }
+<<<<<<< HEAD
         return self::$instance;
     }
 
@@ -40,3 +41,12 @@ class Database {
         return self::$connection;
     }
 }
+=======
+            return self::$instance;
+        }
+        
+        public function getConnection(){
+            return self::$connection;
+        }
+}
+>>>>>>> 387f45d952c734e19a6d96f5bb591accb1827fdf

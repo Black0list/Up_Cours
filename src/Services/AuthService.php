@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\http\Login;
+use App\http\Register;
 use App\Model\Role;
 use App\Model\Utilisateur;
+use Exception;
 
 class AuthService
 {
@@ -17,11 +19,22 @@ class AuthService
         $this->UtilisateurService = new UtilisateurService;
     }
 
-    public function register(Login $LoginForm)
+    public function register(Register $RegisterForm)
     {
-        $user = new Utilisateur();
-        $role = $this->RoleService->getRoleByName($LoginForm->getProperty("role_name"));
-        $user->Build(["name" => $LoginForm->getProperty("username"), "email" => $LoginForm->getProperty("email"), "password" => $LoginForm->getProperty("password"), "Cpassword" => $LoginForm->getProperty("Cpassword"), "role" => $role]);
+        $user = $this->UtilisateurService->Create($RegisterForm);
+
+        return $user;
+    }
+
+    public function login(Login $LoginForm)
+    {
+        $user = $this->UtilisateurService->getUserByEmailAndPassword($LoginForm->getProperty("email"), $LoginForm->getProperty("password"));
+
+        if(!$user)
+        {
+            throw new Exception("Email Or Password is Incorrect");
+        }
+
         return $user;
     }
 }

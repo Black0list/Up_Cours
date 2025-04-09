@@ -1,6 +1,6 @@
+CREATE DATABASE upcours_database;
 
-
-use upcours_database;
+USE upcours_database;
 
 CREATE TABLE roles (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -10,13 +10,12 @@ CREATE TABLE roles (
 
 CREATE TABLE utilisateurs (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nom VARCHAR(30),
+    name VARCHAR(30),
+    email VARCHAR(50) UNIQUE,
     password VARCHAR(50),
-    mail VARCHAR(50) UNIQUE,
-    phone VARCHAR(20) UNIQUE,
-    status VARCHAR(55),
     role_id INT,
-    Foreign Key (role_id) REFERENCES roles (id)
+    status VARCHAR(55),
+    FOREIGN KEY (role_id) REFERENCES roles (id) ON DELETE SET NULL
 ) ENGINE = INNODB;
 
 CREATE TABLE categories (
@@ -33,27 +32,27 @@ CREATE TABLE tags (
 
 CREATE TABLE cours (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    titre VARCHAR(255),
+    title VARCHAR(255),
     description TEXT,
-    contenu VARCHAR(255),
+    content VARCHAR(255),
     categorie_id INT,
     enseignant_id INT,
-    Foreign Key (categorie_id) REFERENCES categories (id),
-    Foreign Key (enseignant_id) REFERENCES utilisateurs (id)
+    FOREIGN KEY (categorie_id) REFERENCES categories (id) ON DELETE SET NULL,
+    FOREIGN KEY (enseignant_id) REFERENCES utilisateurs (id) ON DELETE CASCADE
 ) ENGINE = INNODB;
 
 CREATE TABLE subscriptions (
+    id INT PRIMARY KEY AUTO_INCREMENT,
     cour_id INT,
-    FOREIGN KEY (cour_id) REFERENCES cours (id),
+    FOREIGN KEY (cour_id) REFERENCES cours (id) ON DELETE CASCADE,
     etudiant_id INT,
-    FOREIGN KEY (etudiant_id) REFERENCES utilisateurs (id),
-    PRIMARY KEY (cour_id, etudiant_id)
+    FOREIGN KEY (etudiant_id) REFERENCES utilisateurs (id) ON DELETE SET NULL,
 ) ENGINE = INNODB;
 
 CREATE TABLE cours_tags (
+    id INT PRIMARY KEY AUTO_INCREMENT,
     cour_id INT,
-    FOREIGN KEY (cour_id) REFERENCES cours (id),
+    FOREIGN KEY (cour_id) REFERENCES cours (id) ON DELETE CASCADE,
     tag_id INT,
-    FOREIGN KEY (tag_id) REFERENCES tags (id),
-    PRIMARY KEY (cour_id, tag_id)
+    FOREIGN KEY (tag_id) REFERENCES tags (id) ON DELETE CASCADE,
 ) ENGINE = INNODB;

@@ -3,9 +3,9 @@
 namespace App\Model;
 
 class Role{
-    private int $id = 0;
-    private String $role_name = '';
-    private String $description = '';
+    public int $id = 0;
+    public String $role_name;
+    public String $description = '';
 
     public function __construct()
     {
@@ -13,20 +13,19 @@ class Role{
     }
 
     public function __call($name, $arguments) {
-        if($name == "Build"){
-            if(count($arguments) == 1){
-                $this->id = $arguments[0];
-            } 
-            if(count($arguments) == 2){
-                $this->id = $arguments[0];
-                $this->role_name = $arguments[1];
-            } 
-            if(count($arguments) == 3){
-                $this->id = $arguments[0];
-                $this->role_name = $arguments[1];
-                $this->description = $arguments[2];
-            } 
+        if ($name === "Build" && isset($arguments[0]) && is_array($arguments[0])) {
+            $allowedAttributes = ['id', 'role_name', 'description'];
+    
+            foreach ($arguments[0] as $key => $value) {
+                if (in_array($key, $allowedAttributes)) {
+                    $this->{$key} = $value;
+                }
+            }
         }
+    }
+
+    public function getAttributes(): array{
+        return ['id', 'role_name', 'description'];
     }
 
 
@@ -45,4 +44,7 @@ class Role{
         return "id : {$this->getId()}, role_name : {$this->getRoleName()}, description : {$this->getDescription()}";
     }
 
+    public function attr() : array {
+        return ["id", "role_name", "description"];
+    }
 }
