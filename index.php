@@ -2,122 +2,111 @@
 
 use App\Controllers\AuthController;
 use App\http\Register;
+use Dotenv\Dotenv;
 
-require_once dirname(__DIR__) . "\\UpCours\\vendor\\autoload.php";
+// Autoload & .env
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
 session_start();
 
+// Controllers
+$authController = new AuthController;
 
+// Routing
+$requestUri = trim($_SERVER['REQUEST_URI'], '/');
+$requestSegments = explode("/", $requestUri);
 
-$AuthC = new AuthController;
-$request = $_SERVER['REQUEST_URI'];
-$RequestArray = explode("/", $_SERVER['REQUEST_URI']);
+// View Paths
+$views = [
+    'home'       => __DIR__ . '/Views/Home/home.php',
+    'auth'       => __DIR__ . '/Views/Forms/auth.php',
+    'cours'      => __DIR__ . '/Views/Page/cours.php',
+    'users'      => __DIR__ . '/Views/Page/users.php',
+    'categories' => __DIR__ . '/Views/Page/categories.php',
+    'tags'       => __DIR__ . '/Views/Page/tags.php',
+    'roles'      => __DIR__ . '/Views/Page/roles.php',
+];
 
-$HomePage = "/Views/Home/home.php";
-$AuthPage = "/Views/Forms/auth.php";
-$CoursPage = "/Views/Page/cours.php";
-$UsersPage = "/Views/Page/users.php";
-$CategoriePage = "/Views/Page/categories.php";
-$TagsPage = "/Views/Page/tags.php";
-$RolesPage = "/Views/Page/roles.php";
+// Routing Logic
+switch ($requestSegments[0]) {
+    case '':
+        require $views['home'];
+        break;
 
-    switch ($RequestArray[1]){
-        case '': 
-            {
-                require __DIR__ . "/Views/Home/home.php";
-                break;
+    case 'form':
+        if (!empty($requestSegments[1])) {
+            switch ($requestSegments[1]) {
+                case 'auth':
+                    require $views['auth'];
+                    break;
+                default:
+                    require $views['home'];
+                    break;
             }
-        case 'form':
-            {
-                if(isset($RequestArray[2]))
-                {
-                    switch ($RequestArray[2]) 
-                    {
-                        case 'auth':
-                            require __DIR__ . $AuthPage;
-                            break;
-                        
-                        default:
-                            require __DIR__ . $HomePage;
-                            break;
-                    }
-                } else {
-                    require __DIR__ . $HomePage;
-                }
-                break;
+        } else {
+            require $views['home'];
+        }
+        break;
+
+    case 'page':
+        if (!empty($requestSegments[1])) {
+            switch ($requestSegments[1]) {
+                case 'cours':
+                    require $views['cours'];
+                    break;
+                case 'users':
+                    require $views['users'];
+                    break;
+                case 'categories':
+                    require $views['categories'];
+                    break;
+                case 'tags':
+                    require $views['tags'];
+                    break;
+                case 'roles':
+                    require $views['roles'];
+                    break;
+                default:
+                    require $views['home'];
+                    break;
             }
-        case 'page':
-            {
-                if(isset($RequestArray[2]))
-                {
-                    switch ($RequestArray[2]) 
-                    {
-                        case 'cours':
-                            require __DIR__ . $CoursPage;
-                            break;
+        } else {
+            require $views['home'];
+        }
+        break;
 
-                        case 'users':
-                            require __DIR__ . $UsersPage;
-                            break;
-                        
-                        default:
-                            require __DIR__ . $HomePage;
-                            break;
-                    }
-                } else {
-                    require __DIR__ . $HomePage;
-                }
-                break;
+    case 'auth':
+        if (!empty($requestSegments[1])) {
+            switch ($requestSegments[1]) {
+                case 'login':
+                    $authController->login();
+                    break;
+                case 'register':
+                    $registerForm = new Register(
+                        $_POST['username'] ?? '',
+                        $_POST['email'] ?? '',
+                        $_POST['password'] ?? '',
+                        $_POST['Cpassword'] ?? '',
+                        $_POST['role'] ?? ''
+                    );
+                    $authController->register($registerForm);
+                    break;
+                case 'logout':
+                    $authController->logout();
+                    break;
+                default:
+                    require $views['home'];
+                    break;
             }
-        case 'auth':
-            {
-                if(isset($RequestArray[2]))
-                {
-                    $AuthController = new AuthController;
-                    switch ($RequestArray[2]) 
-                    {
-                        case 'login':
-                            // git status
-                            break;
+        } else {
+            require $views['home'];
+        }
+        break;
 
-                        case 'register':
-                            $LoginForm = new Register($_POST['username'], $_POST['email'], $_POST['password'], $_POST['Cpassword'], $_POST['role']);
-                            $AuthController->register($LoginForm);
-                            break;
-
-                        case 'logout':
-                            $AuthController->logout();
-                            break;
-                        
-                        default:
-                            require __DIR__ . $HomePage;
-                            break;
-                    }
-                } else {
-                    require __DIR__ . $HomePage;
-                }
-                break;
-            }
-            
-            
-        default:
-            break;
-    }
-// ?>
-
-
-<!-- case '/profile':
-            require __DIR__ .'/Views/users.php';
-            break;
-        case '/form/signup':
-            require __DIR__ .'/Views/Forms/sign_up.php';
-            break;
-        case '/auth/login': 
-            $AuthC->login();
-            break;
-        case '/auth/signup': 
-            $AuthC->signup();
-            break;
-        case '/auth/logout': 
-            $AuthC->logout();
-            break;
-         -->
+    default:
+        require $views['home'];
+        break;
+}
